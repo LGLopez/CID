@@ -1,31 +1,6 @@
 package mlr;
 
 public class DataHelperMatrix {
-    private DataStorage dataStorage;
-    private double[] x1;
-    private double[] x2;
-    private double[] y;
-
-    DataHelperMatrix() {
-        dataStorage = new DataStorage();
-        x1 = dataStorage.getX1();
-        x2 = dataStorage.getX2();
-        y = dataStorage.getY();
-
-        double[][] matrixJoined = joinArrays(x1, x2);
-        printJoinArrays(matrixJoined);
-        double[][] matrixTranspose = transposeMatrix(matrixJoined);
-        System.out.println("Transpose matrix:");
-        printJoinArrays(matrixTranspose);
-        System.out.println("Matrix by vector:");
-        double[] matrixByVector = multiplyMatrixWithVector(matrixTranspose, y);
-        printVector(matrixByVector);
-        double[][] matrixTransposeByMatrix = multiplyMatrixWithMatrix(matrixTranspose, matrixJoined);
-        System.out.println("Matrix by matrix:");
-        printJoinArrays(matrixTransposeByMatrix);
-
-    }
-
     // join the two arrays into a matrix with one added at the start
     public double[][] joinArrays(double[] x1, double[] x2) {
         double[][] matrix = new double[x1.length][3]; // create a general way to find the second dimension of the matrix
@@ -91,7 +66,53 @@ public class DataHelperMatrix {
         return result;
     }
 
-    // inverse of a 3x3 matrix
-    
+    // inverse of a 3x3 matrix using Gauss-Jordan elimination
+    public double[][] inverseMatrix(double[][] matrix) {
+        double[][] inverseMatrix = new double[matrix.length][matrix.length];
+        for (int i=0; i<matrix.length; i++) {
+            for (int j=0; j<matrix.length; j++) {
+                if (i == j) {
+                    inverseMatrix[i][j] = 1;
+                } else {
+                    inverseMatrix[i][j] = 0;
+                }
+            }
+        }
+        // Gauss-Jordan elimination
+        for (int i=0; i<matrix.length; i++) {
+            // find pivot
+            int pivot = i;
+            for (int j=i; j<matrix.length; j++) {
+                if (Math.abs(matrix[j][i]) > Math.abs(matrix[pivot][i])) {
+                    pivot = j;
+                }
+            }
+            // swap rows
+            double[] temp = matrix[i];
+            matrix[i] = matrix[pivot];
+            matrix[pivot] = temp;
+            // swap rows in inverse matrix
+            temp = inverseMatrix[i];
+            inverseMatrix[i] = inverseMatrix[pivot];
+            inverseMatrix[pivot] = temp;
+            // divide pivot row by pivot element
+            double pivotElement = matrix[i][i];
+            for (int j=0; j<matrix.length; j++) {
+                matrix[i][j] /= pivotElement;
+                inverseMatrix[i][j] /= pivotElement;
+            }
+            // subtract pivot row from other rows
+            for (int j=0; j<matrix.length; j++) {
+                if (j!=i) {
+                    double multiplier = matrix[j][i];
+                    for (int k=0; k<matrix.length; k++) {
+                        matrix[j][k] -= matrix[i][k] * multiplier;
+                        inverseMatrix[j][k] -= inverseMatrix[i][k] * multiplier;
+                    }
+                }
+            }
+        }
+        return inverseMatrix;
+    }
     
 }
