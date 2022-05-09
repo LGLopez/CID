@@ -9,6 +9,8 @@ public class GradientDescentAgent extends Agent{
     Double x;
 
     protected void setup() {
+        args = getArguments();
+        x = Double.parseDouble(args[0].toString());
         System.out.println("Agent "+getLocalName()+" started.");
         addBehaviour(new MyGradientDescentAgent());
     } 
@@ -17,7 +19,8 @@ public class GradientDescentAgent extends Agent{
         
         public void action() {
             gdFormulas = new GradientDescentFormulas();
-            gdFormulas.main();
+            gdFormulas.generateModel();
+            gdFormulas.predictY(x);
             System.out.println("Agent " + getLocalName() + " action method executed");
         }
         

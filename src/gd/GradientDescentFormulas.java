@@ -93,12 +93,17 @@ public class GradientDescentFormulas {
         System.out.println("new b1: " + this.b1);
     }
     
-    public void main() {
+    public void generateModel() {
         // for(int i = 0; i < 1000; i++) {
         for(int i = 0; i < 200000 && (!this.greaterThanToleranceB0 || !this.greaterThanToleranceB1); i++) {
             this.calculateNewB0AndB1();
         }
         System.out.println("final b0: " + this.b0);
         System.out.println("final b1: " + this.b1);
+    }
+
+    public void predictY(double x) {
+        double y = this.b0 + this.b1 * x;
+        System.out.println("predicted y: " + y);
     }
 }

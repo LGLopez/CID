@@ -36,4 +36,8 @@
     //     System.println("Gradient Descent");
     //     gradientDescent();
     // }
+
+optimal for Benetton
+0.00005
+
     
