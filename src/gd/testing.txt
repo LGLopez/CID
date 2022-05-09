@@ -1,0 +1,39 @@
+    // // gradient descent test
+    // public void gradientDescent() {
+    //     double b0 = 0;
+    //     double b1 = 0;
+    //     double n = dataStorage.getX().length;
+    //     double learningRate = 0.001;
+    //     double error = 0;
+    //     double[] x = dataStorage.getX();
+    //     double[] y = dataStorage.getY();
+    //     double[] y_pred = new double[n];
+    //     double[] error_array = new double[n];
+    //     double[] b0_array = new double[n];
+    //     double[] b1_array = new double[n];
+    //     double[] learningRate_array = new double[n];
+
+    //     for (int i = 0; i < n; i++) {
+    //         y_pred[i] = b0 + b1 * x[i];
+    //         error_array[i] = y[i] - y_pred[i];
+    //         b0_array[i] = b0;
+    //         b1_array[i] = b1;
+    //         learningRate_array[i] = learningRate;
+    //         b0 = b0 + learningRate * error_array[i] * x[i];
+    //         b1 = b1 + learningRate * error_array[i];
+    //     }
+    //     System.out.println("b0: " + b0);
+    //     System.out.println("b1: " + b1);
+    //     System.out.println("error: " + error);
+    //     System.out.println("learningRate: " + learningRate);
+    //     System.out.println("b0_array: " + b0_array);
+    //     System.out.println("b1_array: " + b1_array);
+    //     System.out.println("error_array: " + error_array);
+    //     System.out.println("learningRate_array: " + learningRate_array);
+    // }
+
+    // public void main() {
+    //     System.println("Gradient Descent");
+    //     gradientDescent();
+    // }
+    

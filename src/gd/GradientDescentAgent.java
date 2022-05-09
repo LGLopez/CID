@@ -9,8 +9,6 @@ public class GradientDescentAgent extends Agent{
     Double x;
 
     protected void setup() {
-        args = getArguments();
-        x = Double.parseDouble(args[0].toString());
         System.out.println("Agent "+getLocalName()+" started.");
         addBehaviour(new MyGradientDescentAgent());
     } 
@@ -18,9 +16,9 @@ public class GradientDescentAgent extends Agent{
     private class MyGradientDescentAgent extends OneShotBehaviour {
         
         public void action() {
-            gdFormulas = new GradientDescentFormulas(x);
+            gdFormulas = new GradientDescentFormulas();
             gdFormulas.main();
-            System.out.println("Agent's action method executed");
+            System.out.println("Agent " + getLocalName() + " action method executed");
         }
         
         public int onEnd() {
