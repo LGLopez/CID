@@ -15,7 +15,7 @@ public class GradientDescentFormulas {
         dataStorage = new DataStorage();
         this.b0 = 0; // intercept
         this.b1 = 0; // slope
-        this.learningRate = 0.00005;
+        this.learningRate = 0.0005;
         this.n = dataStorage.getX().length;
     }
 
@@ -61,22 +61,15 @@ public class GradientDescentFormulas {
 
     // sum of squared residuales
     public double[] sumOfSquaredResiduals() {
-        double sumB0 = 0;
-        double sumB1 = 0;
+        double b0Gradient = 0;
+        double b1Gradient = 0;
         for (int i = 0; i < this.n; i++) {
-            double derivativeB0 = -2 * (dataStorage.getY()[i] - (this.b0 + this.b1 * dataStorage.getX()[i]));
-            double forDerivativeB1 = dataStorage.getX()[i] * -2;
-            double derivativeB1 = forDerivativeB1 * (dataStorage.getY()[i] - (this.b0 + this.b1 * dataStorage.getX()[i]));
-            sumB0 += derivativeB0;
-            sumB1 += derivativeB1;
+            b0Gradient -= (2/this.n) * (dataStorage.getY()[i] - (this.b0 + this.b1 * dataStorage.getX()[i]));
+            b1Gradient -= (2/this.n) * dataStorage.getX()[i] * (dataStorage.getY()[i] - (this.b0 + this.b1 * dataStorage.getX()[i]));
         }
-        // System.out.println("sumB0: " + sumB0);
-        // System.out.println("sumB1: " + sumB1);
         // step size calculation
-        double stepSizeB0 = this.learningRate * sumB0;
-        double stepSizeB1 = this.learningRate * sumB1;
-        // System.out.println("stepSizeB0: " + stepSizeB0);
-        // System.out.println("stepSizeB1: " + stepSizeB1);
+        double stepSizeB0 = this.learningRate * b0Gradient;
+        double stepSizeB1 = this.learningRate * b1Gradient;
         double[] stepSize = {stepSizeB0, stepSizeB1};
         return stepSize;
     }
@@ -85,17 +78,16 @@ public class GradientDescentFormulas {
     public void calculateNewB0AndB1() {
         double stepSizeB0 = this.sumOfSquaredResiduals()[0];
         double stepSizeB1 = this.sumOfSquaredResiduals()[1];
-        this.greaterThanToleranceB0 = Math.abs(stepSizeB0) < 0.001; // may be changed to 0.00001
-        this.greaterThanToleranceB1 = Math.abs(stepSizeB1) < 0.001; // may be changed to 0.00001
+        this.greaterThanToleranceB0 = Math.abs(stepSizeB0) < 0.0001; // may be changed to 0.00001
+        this.greaterThanToleranceB1 = Math.abs(stepSizeB1) < 0.0001; // may be changed to 0.00001
         this.b0 = this.b0 - stepSizeB0;
         this.b1 = this.b1 - stepSizeB1;
-        System.out.println("new b0: " + this.b0);
-        System.out.println("new b1: " + this.b1);
+        // System.out.println("new b0: " + this.b0);
+        // System.out.println("new b1: " + this.b1);
     }
     
     public void generateModel() {
-        // for(int i = 0; i < 1000; i++) {
-        for(int i = 0; i < 200000 && (!this.greaterThanToleranceB0 || !this.greaterThanToleranceB1); i++) {
+        for(int i = 0; i < 400000 && (!this.greaterThanToleranceB0 || !this.greaterThanToleranceB1); i++) {
             this.calculateNewB0AndB1();
         }
         System.out.println("final b0: " + this.b0);
