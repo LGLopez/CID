@@ -1,0 +1,30 @@
+
+public double manhattanDistance(Sepal sepal, Sepal[] sepalArray) {
+    double distance = 0;
+    for (int i = 0; i < sepalArray.length; i++) {
+        distance += Math.abs(sepal.getLength() - sepalArray[i].getLength());
+        distance += Math.abs(sepal.getWidth() - sepalArray[i].getWidth());
+    }
+    return distance;
+}
+
+public double minkowskiDistance(Sepal sepal, Sepal[] sepalArray, int p) {
+    double distance = 0;
+    for (int i = 0; i < sepalArray.length; i++) {
+        distance += Math.pow(Math.abs(sepal.getLength() - sepalArray[i].getLength()), p);
+        distance += Math.pow(Math.abs(sepal.getWidth() - sepalArray[i].getWidth()), p);
+    }
+    return Math.pow(distance, 1 / p);
+}
+
+public double cosineDistance(Sepal sepal, Sepal[] sepalArray) {
+    double distance = 0;
+    double length = 0;
+    double width = 0;
+    for (int i = 0; i < sepalArray.length; i++) {
+        length += sepal.getLength() * sepalArray[i].getLength();
+        width += sepal.getWidth() * sepalArray[i].getWidth();
+    }
+    distance = 1 - length / (Math.sqrt(Math.pow(sepal.getLength(), 2) * Math.pow(sepalArray[0].getLength(), 2)) + Math.sqrt(Math.pow(sepal.getWidth(), 2) * Math.pow(sepalArray[0].getWidth(), 2)));
+    return distance;
+}
