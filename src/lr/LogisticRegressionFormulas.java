@@ -19,12 +19,6 @@ public class LogisticRegressionFormulas {
         this.learningRate = 0.1;
     }
 
-    public LogisticRegressionFormulas(double w0, double w1, double w2) {
-        this.w0 = w0;
-        this.w1 = w1;
-        this.w2 = w2;
-    }
-
     public double getW0() {
         return w0;
     }
@@ -47,10 +41,10 @@ public class LogisticRegressionFormulas {
         this.w2 = w2;
     }
 
-    public double getSigmoid() {
+    public double getSigmoid(double[] xArray) {
         // sigmoid function
         // get the correct value from the training set
-        double x = this.w0 + (this.w1 * this.trainingSet[0][0]) + (this.w2 * this.trainingSet[0][1]);
+        double x = this.w0 + (this.w1 * xArray[0]) + (this.w2 * xArray[1]);
         double sigmoid = 1 / (1 + Math.exp(-x));
         return sigmoid;
     }
@@ -58,10 +52,11 @@ public class LogisticRegressionFormulas {
     public void calculateGradientDescent(double w, int j) {
         double sum = 0;
         for(int i = 0; i < trainingSet.length; i++) {
-            sum += (trainingSet[i][3] - getSigmoid() ) * trainingSet[i][j];
+            double[] x = { trainingSet[i][1], trainingSet[i][2] };
+            sum += (trainingSet[i][3] - getSigmoid(x) ) * trainingSet[i][j];
         }
-        wArray[j] = w - (learningRate * sum);
-        System.out.println("w" + j + ": " + wArray[j]);
+        wArray[j] = w + (learningRate * sum);
+        // System.out.println("w" + j + ": " + wArray[j]);
     }
 
     public void generateModel() {
@@ -71,6 +66,14 @@ public class LogisticRegressionFormulas {
             calculateGradientDescent(wArray[2], 2);
             reasignWeights(wArray[0], wArray[1], wArray[2]);
         }
+        System.out.println("Final w0: " + wArray[0]);
+        System.out.println("Final w1: " + wArray[1]);
+        System.out.println("Final w2: " + wArray[2]);
     }
 
+    public void predictY(double x1, double x2) {
+        double[] x = { x1, x2 };
+        double sigmoid = getSigmoid(x);
+        System.out.println("Sigmoid: " + sigmoid);
+    }
 }
