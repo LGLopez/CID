@@ -15,7 +15,7 @@ public class KNNFormulas {
         k = 5;
         this.dataStorage = new DataStorage();
         distances = new double[dataStorage.getSpecies().length];
-        predictSepal = new Sepal(5.2, 3.1, "");
+        // predictSepal = new Sepal(5.2, 3.1, "");
     }
 
     public double[] getDistancesSorted() {
@@ -53,9 +53,10 @@ public class KNNFormulas {
             }
         }
         // print kSpecies
-        for(int i = 0; i < kSpecies.length; i++) {
-            System.out.println(kSpecies[i]);
-        }
+        // for(int i = 0; i < kSpecies.length; i++) {
+        //     System.out.println(kSpecies[i]);
+        // }
+
         // count kSpecies occurrences
         int[] kSpeciesCount = new int[k];
         for(int i = 0; i < kSpecies.length; i++) {
@@ -75,19 +76,25 @@ public class KNNFormulas {
         }
 
         // print most common species
-        System.out.println("Most common species:");
+        // System.out.println("Most common species:");
         for(int i = 0; i < kSpeciesCount.length; i++) {
             if(kSpeciesCount[i] == max) {
-                System.out.println(kSpecies[i]);
+                // System.out.println(kSpecies[i]);
+                this.predictSepal.setSpecies(kSpecies[i]);
                 break;
             }
         }
     }
 
-    public void main() {
-        System.out.println("KNNFormulas main method executed");
-        euclideanDistance(predictSepal, this.dataStorage.getSepal());
+    public void generateModelAndPredict(double length, double width) {
+        this.predictSepal = new Sepal(length, width, "");
+        
+        euclideanDistance(this.predictSepal, this.dataStorage.getSepal());
         classifyAccordingToK();
+
+        System.out.println("Length: " + length);
+        System.out.println("Width: " + width);
+        System.out.println("Predicted species: " + this.predictSepal.getSpecies());
     }
 
     public void euclideanDistance(Sepal sepal, Sepal[] sepalArray) {
