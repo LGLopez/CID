@@ -6,17 +6,16 @@ public class LogisticRegressionFormulas {
     double w2;
     double learningRate;
     double[] wArray = { 0, 0, 0 };
-    double[][] trainingSet = {
-            { 1, 1, 1, 0 },
-            { 1, 4, 2, 1 },
-            { 1, 2, 4, 1 }
-    };
+    DataStorage ds;
+    double[][] trainingSet;
 
     public LogisticRegressionFormulas() {
+        ds = new DataStorage();
         this.w0 = 0;
         this.w1 = 0;
         this.w2 = 0;
         this.learningRate = 0.1;
+        this.trainingSet = ds.getTrainingSet();
     }
 
     public double getW0() {
